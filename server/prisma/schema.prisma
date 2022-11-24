@@ -15,7 +15,7 @@ model Post {
     id       String    @id @default(uuid())
     title    String
     body     String
-    Comments Comment[]
+    comments Comment[]
 }
 
 // may need to add auth id from provider later
@@ -23,7 +23,7 @@ model Post {
 model User {
     id       String    @id @default(uuid())
     name     String
-    Comments Comment[]
+    comments Comment[]
     likes    Like[]
 }
 
