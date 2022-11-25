@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Context } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAsync } from '../hooks/useAsync'
 import { getPost } from '../api/posts'
@@ -42,7 +42,7 @@ export type User = {
 	name: string
 }
 
-const Context = React.createContext<PostContextType | null>(null)
+const Context = React.createContext<PostContextType>(null)
 
 export function usePost() {
 	return useContext(Context)
@@ -68,4 +68,54 @@ export function PostProvider({ children }: Props) {
 	function getReplies(parentId: string) {
 		return commentsByParentId[parentId as CommentKey]
 	}
+
+	function createLocalComment(comment: string) {
+		setComments((prevComments) => {
+			return [comment, ...comments]
+		})
+	}
+
+	function updateLocalComment(id: string, message: string) {
+		setComments((prevComments) => {
+			return prevComments.map((comment) => {
+				comment.id == id ? { ...comment, message } : comment
+			})
+		})
+	}
+
+	function deleteLocalComment(id: string) {
+		setComments((prevComments) => {
+			return prevComments.filter((comment) => comment.id !== id)
+		})
+	}
+
+	function toggleLocalCommentLike(id: string, addLike: boolean) {
+		setComments((prevComments) => {
+			return prevComments.map((comment) => {
+				if (id == comment.id) {
+					if (addLike) {
+						return {
+							...comment,
+							likeCount: comment.likeCount + 1,
+							likedByMe: true,
+						}
+					} else {
+						return {
+							...comment,
+							likeCount: comment.likeCount - 1,
+							likedByMe: false,
+						}
+					}
+				} else {
+					return comment
+				}
+			})
+		})
+	}
+	useEffect(() => {
+		if (post?.comments == null) return
+		setComments(post.comments)
+	}, [post?.comments])
+
+	return <Context.Provider></Context.Provider>
 }
