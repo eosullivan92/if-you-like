@@ -6,10 +6,11 @@ import { useContext, useMemo, useState, useEffect } from 'react'
 
 interface PostContextType {
 	post: Post
+	rootComments: Comment[]
 	getReplies: (parentId: string) => Comment[]
-	createLocalComment: (comment: Comment) => void
-	updateLocalComment: (comment: Comment) => void
-	deleteLocalComment: (comment: Comment) => void
+	createLocalComment: (comment: string) => void
+	updateLocalComment: (id: string, comment: string) => void
+	deleteLocalComment: (id: string) => void
 	toggleLocalCommentLike: (id: string, addLike: boolean) => void
 }
 
@@ -42,10 +43,10 @@ export type User = {
 	name: string
 }
 
-const Context = React.createContext<PostContextType>(null)
+const PostContext = React.createContext<Partial<PostContextType>>({})
 
 export function usePost() {
-	return useContext(Context)
+	return useContext(PostContext)
 }
 
 export function PostProvider({ children }: Props) {
@@ -117,5 +118,20 @@ export function PostProvider({ children }: Props) {
 		setComments(post.comments)
 	}, [post?.comments])
 
-	return <Context.Provider></Context.Provider>
+	return (
+		<PostContext.Provider
+			value={{
+				post: {
+					id,
+					...post,
+				},
+				rootComments: commentsByParentId['null'],
+				getReplies,
+				createLocalComment,
+				updateLocalComment,
+				deleteLocalComment,
+				toggleLocalCommentLike,
+			}}
+		></PostContext.Provider>
+	)
 }
