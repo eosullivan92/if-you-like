@@ -6,8 +6,8 @@ import { useContext, useMemo, useState, useEffect } from 'react'
 
 interface PostContextType {
 	post: Post
-	rootComments: Comment[]
-	getReplies: (parentId: string) => Comment[]
+	rootComments: CommentType[]
+	getReplies: (parentId: string) => CommentType[]
 	createLocalComment: (comment: string) => void
 	updateLocalComment: (id: string, comment: string) => void
 	deleteLocalComment: (id: string) => void
@@ -19,7 +19,7 @@ type Props = {
 }
 
 type CommentGroup = {
-	[key: string]: Comment[]
+	[key: string]: CommentType[]
 }
 
 type CommentKey = keyof CommentGroup
@@ -27,14 +27,14 @@ type CommentKey = keyof CommentGroup
 export type Post = {
 	title: string
 	body: string
-	comments?: Comment[]
+	comments?: CommentType[]
 }
 
-export type Comment = {
+export type CommentType = {
 	id: string
 	message: string
 	parentId?: string
-	createdAt: Date
+	createdAt: string
 	user: User
 }
 
@@ -132,6 +132,8 @@ export function PostProvider({ children }: Props) {
 				deleteLocalComment,
 				toggleLocalCommentLike,
 			}}
-		></PostContext.Provider>
+		>
+			{children}
+		</PostContext.Provider>
 	)
 }

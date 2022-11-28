@@ -1,23 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Post } from '../context/PostContext'
-// export type Post = {
-// 	title: string
-// 	body: string
-// 	comments?: Comment[]
-// }
-
-// export type Comment = {
-// 	id: string
-// 	message: string
-// 	parentId?: string
-// 	createdAt: Date
-// 	user: User
-// }
-
-// export type User = {
-// 	id: string
-// 	name: string
-// }
 
 export function useAsync(func: Function, dependencies: string[] = []) {
 	// used in useEffect, execute runs immediately, reinvokes when dependencies change
