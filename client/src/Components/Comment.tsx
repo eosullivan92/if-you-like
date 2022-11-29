@@ -11,9 +11,9 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 })
 
 export default function Comment({ id, message, user, createdAt }: CommentType) {
-	const [areChildrenHidden, setAreChildrenHidden] = useState(false)
-	const [isReplying, setIsReplying] = useState(false)
-	const [isEditing, setIsEditing] = useState(false)
+	const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false)
+	const [isReplying, setIsReplying] = useState<boolean>(false)
+	const [isEditing, setIsEditing] = useState<boolean>(false)
 	const {
 		post,
 		getReplies,
@@ -74,12 +74,21 @@ export default function Comment({ id, message, user, createdAt }: CommentType) {
 							>
 								<button
 									className="collapse-line"
-									area-label="Hide Replies "
+									area-label="Hide Replies"
+									onClick={() => setAreChildrenHidden(true)}
 								></button>
 								<div className="nested-comments">
 									<CommentList comments={childComments} />
 								</div>
 							</div>
+							<button
+								className={`btn mt1 ${
+									!areChildrenHidden ? 'hide' : ''
+								}`}
+								onClick={() => setAreChildrenHidden(false)}
+							>
+								Show Replies
+							</button>
 						</>
 					)}
 				</div>
