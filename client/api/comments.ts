@@ -11,7 +11,7 @@ export function createComment({
 	message,
 	parentId,
 }: CreatCommentProps) {
-	return makeRequest(`post/${postId}/comments`, {
+	return makeRequest(`posts/${postId}/comments`, {
 		method: 'POST',
 		data: { message, parentId },
 	})

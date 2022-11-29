@@ -22,7 +22,7 @@ type CommentGroup = {
 	[key: string]: CommentType[]
 }
 
-type CommentKey = keyof CommentGroup
+// type CommentKey = keyof CommentGroup
 
 export type Post = {
 	id: string
@@ -57,10 +57,11 @@ export function PostProvider({ children }: Props) {
 
 	//group comments by parent id
 	const commentsByParentId = useMemo(() => {
-		//below is causing issues with getReplies function, as parentId can't be used as a key in an empty array
+		// below is causing issues with getReplies function, as parentId can't be used as a key in an empty array
 		// if (comments == null) return []
 		const group: CommentGroup = {}
 		comments.forEach((comment) => {
+			//assigns group[parentId] to [] if right side is falsy i.e. first of that parentId in loop
 			group[comment.parentId] ||= []
 			group[comment.parentId].push(comment)
 		})
@@ -68,7 +69,7 @@ export function PostProvider({ children }: Props) {
 	}, [comments])
 
 	function getReplies(parentId: string) {
-		return commentsByParentId[parentId as CommentKey]
+		return commentsByParentId[parentId as keyof CommentGroup]
 	}
 
 	function createLocalComment(comment: string) {
@@ -116,6 +117,7 @@ export function PostProvider({ children }: Props) {
 	}
 	useEffect(() => {
 		if (post?.comments == null) return
+		console.log(post.comments)
 		setComments(post.comments)
 	}, [post?.comments])
 

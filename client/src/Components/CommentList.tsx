@@ -7,7 +7,6 @@ type PropsType = {
 }
 
 export default function CommentList(props: PropsType) {
-	console.log(props.comments)
 	return (
 		<>
 			{props.comments.map((comment) => (

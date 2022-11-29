@@ -1,9 +1,10 @@
 import React, { FormEventHandler, useState } from 'react'
+import { CommentType } from '../../context/PostContext'
 
 type CommentFormProps = {
 	loading: boolean
 	error: string
-	onSubmit: (message: string) => Promise<string> // may be number
+	onSubmit: (message: string) => Promise<CommentType>
 	autoFocus: boolean
 	initialValue: string
 }

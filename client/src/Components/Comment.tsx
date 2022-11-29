@@ -4,6 +4,7 @@ import { usePost } from '../../context/PostContext'
 import { FaHeart, FaReply, FaEdit, FaTrash, FaRegHeart } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
 import CommentList from './CommentList'
+import { useUser } from '../../hooks/useUser'
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
 	dateStyle: 'medium',
@@ -23,6 +24,7 @@ export default function Comment({ id, message, user, createdAt }: CommentType) {
 		toggleLocalCommentLike,
 	} = usePost()
 	const childComments = getReplies(id)
+	const currentUser = useUser()
 
 	return (
 		<>
