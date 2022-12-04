@@ -37,6 +37,8 @@ export type CommentType = {
 	parentId?: string
 	createdAt: string
 	user: User
+	likeCount: number
+	likedByMe: boolean
 }
 
 export type User = {

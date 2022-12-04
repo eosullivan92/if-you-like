@@ -16,6 +16,8 @@ export default function CommentList(props: PropsType) {
 						createdAt={comment.createdAt}
 						message={comment.message}
 						user={comment.user}
+						likeCount={comment.likeCount}
+						likedByMe={comment.likedByMe}
 					/>
 				</div>
 			))}

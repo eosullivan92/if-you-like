@@ -6,6 +6,7 @@ type IconBtnProps = {
 	color?: string
 	onClick?: () => void
 	children?: React.ReactNode
+	disabled?: boolean
 }
 
 export function IconBtn({

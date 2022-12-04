@@ -7,15 +7,20 @@ import { IconBtn } from './IconButton'
 import CommentList from './CommentList'
 import { useUser } from '../../hooks/useUser'
 import { useAsyncFn } from '../../hooks/useAsync'
-import { createComment, deleteComment, updateComment } from '../../api/comments'
+import {
+	createComment,
+	deleteComment,
+	toggleCommentLike,
+	updateComment,
+} from '../../api/comments'
 
 type CommentProps = {
 	id: string
 	message: string
 	user: User
 	createdAt: string
-	likeCount?: number
-	likedByMe?: boolean
+	likeCount: number
+	likedByMe: boolean
 }
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -23,7 +28,14 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 	timeStyle: 'short',
 })
 
-export default function Comment({ id, message, createdAt }: CommentProps) {
+export default function Comment({
+	id,
+	message,
+	user,
+	createdAt,
+	likeCount,
+	likedByMe,
+}: CommentProps) {
 	const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false)
 	const [isReplying, setIsReplying] = useState<boolean>(false)
 	const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -40,6 +52,7 @@ export default function Comment({ id, message, createdAt }: CommentProps) {
 	const createCommentFn = useAsyncFn(createComment)
 	const updateCommentFn = useAsyncFn(updateComment)
 	const deleteCommentFn = useAsyncFn(deleteComment)
+	const toggleCommentLikeFn = useAsyncFn(toggleCommentLike)
 
 	function onCommentReply(message: string) {
 		return createCommentFn
@@ -71,11 +84,18 @@ export default function Comment({ id, message, createdAt }: CommentProps) {
 			})
 	}
 
+	function ontoggleCommentLike() {
+		return toggleCommentLikeFn
+			.execute({ postId: post.id, id })
+			.then(({ addLike }: { addLike: boolean }) =>
+				toggleLocalCommentLike(id, addLike)
+			)
+	}
 	return (
 		<>
 			<div className="comment">
 				<div className="header">
-					<span className="name">User Name</span>
+					<span className="name">{user.name}</span>
 					<span className="date">
 						{dateFormatter.format(Date.parse(createdAt))}
 					</span>
@@ -93,8 +113,13 @@ export default function Comment({ id, message, createdAt }: CommentProps) {
 					<div className="message">{message}</div>
 				)}
 				<div className="footer">
-					<IconBtn Icon={FaHeart} aria-label="like">
-						2
+					<IconBtn
+						Icon={likedByMe ? FaHeart : FaRegHeart}
+						aria-label={likedByMe ? 'Unlike' : 'Like'}
+						onClick={ontoggleCommentLike}
+						disabled={toggleCommentLikeFn.loading}
+					>
+						{likeCount}
 					</IconBtn>
 					<IconBtn
 						Icon={FaReply}
@@ -102,18 +127,22 @@ export default function Comment({ id, message, createdAt }: CommentProps) {
 						onClick={() => setIsReplying((prev) => !prev)}
 						isActive={isReplying}
 					/>
-					<IconBtn
-						Icon={FaEdit}
-						aria-label="edit"
-						onClick={() => setIsEditing((prev) => !prev)}
-						isActive={isEditing}
-					/>
-					<IconBtn
-						Icon={FaTrash}
-						aria-label="delete"
-						onClick={onCommentDelete}
-						color="danger"
-					/>
+					{user.id === currentUser.id && (
+						<>
+							<IconBtn
+								Icon={FaEdit}
+								aria-label="edit"
+								onClick={() => setIsEditing((prev) => !prev)}
+								isActive={isEditing}
+							/>
+							<IconBtn
+								Icon={FaTrash}
+								aria-label="delete"
+								onClick={onCommentDelete}
+								color="danger"
+							/>
+						</>
+					)}
 					{deleteCommentFn.error && (
 						<div className="error-msg mt-1">
 							{deleteCommentFn.error}
