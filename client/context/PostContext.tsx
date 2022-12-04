@@ -8,7 +8,7 @@ interface PostContextType {
 	post: Post
 	rootComments: CommentType[]
 	getReplies: (parentId: string) => CommentType[]
-	createLocalComment: (comment: string) => void
+	createLocalComment: (comment: CommentType) => void
 	updateLocalComment: (id: string, comment: string) => void
 	deleteLocalComment: (id: string) => void
 	toggleLocalCommentLike: (id: string, addLike: boolean) => void
@@ -72,7 +72,7 @@ export function PostProvider({ children }: Props) {
 		return commentsByParentId[parentId as keyof CommentGroup]
 	}
 
-	function createLocalComment(comment: string) {
+	function createLocalComment(comment: CommentType) {
 		setComments((prevComments) => {
 			return [comment, ...comments]
 		})
@@ -80,9 +80,9 @@ export function PostProvider({ children }: Props) {
 
 	function updateLocalComment(id: string, message: string) {
 		setComments((prevComments) => {
-			return prevComments.map((comment) => {
+			return prevComments.map((comment) =>
 				comment.id == id ? { ...comment, message } : comment
-			})
+			)
 		})
 	}
 
@@ -117,7 +117,6 @@ export function PostProvider({ children }: Props) {
 	}
 	useEffect(() => {
 		if (post?.comments == null) return
-		console.log(post.comments)
 		setComments(post.comments)
 	}, [post?.comments])
 

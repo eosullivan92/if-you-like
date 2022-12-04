@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { CommentType, Post } from '../context/PostContext'
 
-type Dependencies = []
-
 export function useAsync(func: Function, dependencies: string[] = []) {
 	// used in useEffect, execute runs immediately, reinvokes when dependencies change
 	const { execute, ...state } = useAsyncInternal(func, dependencies, true)
@@ -30,10 +28,8 @@ export function useAsyncInternal(
 
 	const execute = useCallback((...params: any) => {
 		setLoading(true)
-		console.log(...params)
 		return func(...params)
 			.then((data: Post[] | CommentType[]) => {
-				console.log(data)
 				setValue(data)
 				setError(undefined)
 				return data

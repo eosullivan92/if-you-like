@@ -11,7 +11,12 @@ export default function CommentList(props: PropsType) {
 		<>
 			{props.comments.map((comment) => (
 				<div key={comment.id} className="comment-stack">
-					<Comment {...comment} />
+					<Comment
+						id={comment.id}
+						createdAt={comment.createdAt}
+						message={comment.message}
+						user={comment.user}
+					/>
 				</div>
 			))}
 		</>

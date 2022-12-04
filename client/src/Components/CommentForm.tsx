@@ -6,7 +6,7 @@ type CommentFormProps = {
 	error: string
 	onSubmit: (message: string) => Promise<CommentType>
 	autoFocus: boolean
-	initialValue: string
+	initialValue?: string
 }
 
 export function CommentForm({

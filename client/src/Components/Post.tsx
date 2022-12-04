@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react'
-import { getPosts } from '../../api/posts'
 import { createComment } from '../../api/comments'
 import { usePost } from '../../context/PostContext'
 import { useAsyncFn } from '../../hooks/useAsync'
 import CommentList from './CommentList'
 import { CommentForm } from './CommentForm'
-import { CommentType } from '../../context/PostContext'
 
 export const Post = () => {
 	const { post, rootComments, createLocalComment } = usePost()
@@ -28,6 +25,7 @@ export const Post = () => {
 			<h3 className="comments-title">Comments:</h3>
 			<section>
 				<CommentForm
+					autoFocus
 					loading={loading}
 					error={error}
 					onSubmit={onCommentCreate}
