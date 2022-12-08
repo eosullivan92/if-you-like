@@ -51,6 +51,7 @@ app.get('/posts', async (req, res) => {
 				id: true,
 				title: true,
 			},
+			// orderBy: { createdAt: 'desc' },
 		})
 	)
 })

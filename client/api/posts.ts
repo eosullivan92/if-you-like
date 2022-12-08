@@ -16,3 +16,9 @@ export function createPost(post: PostFormType) {
 		data: post,
 	})
 }
+
+//TODO: DELETE
+
+//TODO: UPDATE
+
+//UPVOTE / DOWNVOTE

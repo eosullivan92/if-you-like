@@ -5,7 +5,7 @@ import { getPost } from '../api/posts'
 import { useContext, useMemo, useState, useEffect } from 'react'
 
 interface PostContextType {
-	post: Post
+	post: PostType
 	rootComments: CommentType[]
 	getReplies: (parentId: string) => CommentType[]
 	createLocalComment: (comment: CommentType) => void
@@ -24,7 +24,7 @@ type CommentGroup = {
 
 // type CommentKey = keyof CommentGroup
 
-export type Post = {
+export type PostType = {
 	id: string
 	title: string
 	body: string

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Post, PostFormType } from '../../context/PostContext'
+import { PostType, PostFormType } from '../../context/PostContext'
 
 type PostFormProps = {
 	loading: boolean
 	error: string
-	onSubmit: (post: PostFormType) => Promise<Post>
+	onSubmit: (post: PostFormType) => Promise<PostType>
 	autoFocus: boolean
 	createPostActive: boolean
 	handleCreatePostActive: () => void
