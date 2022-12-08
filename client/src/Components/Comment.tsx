@@ -93,7 +93,7 @@ export default function Comment({
 	}
 	return (
 		<>
-			<div className="comment">
+			<div className="comment" data-testid="comment">
 				<div className="header">
 					<span className="name">{user.name}</span>
 					<span className="date">
@@ -158,8 +158,10 @@ export default function Comment({
 							/>
 						</div>
 					)}
-					{childComments?.length > 0 && (
-						<>
+				</div>
+				{childComments?.length > 0 && (
+					<>
+						{!areChildrenHidden && (
 							<div
 								className={`nested-comment-stack ${
 									areChildrenHidden ? 'hide' : ''
@@ -174,17 +176,17 @@ export default function Comment({
 									<CommentList comments={childComments} />
 								</div>
 							</div>
-							<button
-								className={`btn mt1 ${
-									!areChildrenHidden ? 'hide' : ''
-								}`}
-								onClick={() => setAreChildrenHidden(false)}
-							>
-								Show Replies
-							</button>
-						</>
-					)}
-				</div>
+						)}
+						<button
+							className={`btn mt1 ${
+								!areChildrenHidden ? 'hide' : ''
+							}`}
+							onClick={() => setAreChildrenHidden(false)}
+						>
+							Show Replies
+						</button>
+					</>
+				)}
 			</div>
 		</>
 	)

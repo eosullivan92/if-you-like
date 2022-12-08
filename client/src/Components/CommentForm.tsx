@@ -31,8 +31,13 @@ export function CommentForm({
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 					className="message-input"
+					aria-label="text-input"
 				/>
-				<button className="btn" disabled={loading}>
+				<button
+					className="btn"
+					disabled={loading}
+					aria-label="submit-btn"
+				>
 					{loading ? 'Loading' : 'Post'}
 				</button>
 			</div>

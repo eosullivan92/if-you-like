@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1000px;
   width: calc(100vw - 4rem);
   margin: 2rem auto;
 }
@@ -57,6 +57,75 @@ button {
 .btn:hover,
 .btn:focus-visible {
   color: hsl(22deg, 78%, 55%);
+}
+
+.hide {
+  display: none;
+}
+
+.comment-form-row {
+  display: flex;
+  gap: 1rem;
+}
+.comment-form-row .message-input {
+  flex-grow: 1;
+  resize: none;
+  height: 70px;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  font-size: inherit;
+  font-family: inherit;
+  border: 2px solid hsl(235deg, 50%, 74%);
+  line-height: 1.4;
+}
+.comment-form-row button {
+  padding: 0 1rem;
+}
+
+.icon-btn {
+  background: none;
+  color: hsl(32deg, 100%, 40%);
+  padding: 0.25em;
+  display: flex;
+  align-items: center;
+}
+
+.comment .comment-stack {
+  margin: 0.5rem 0;
+}
+.comment .comment-stack:last-child {
+  margin-bottom: 0;
+}
+.comment .nested-comment-stack {
+  display: flex;
+}
+.comment .nested-comment-stack .collapse-line {
+  border: none;
+  background: none;
+  padding: 0;
+  width: 15px;
+  margin-top: 0.5rem;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transform: translateX(-50%);
+}
+.comment .nested-comment-stack .collapse-line:hover::before,
+.comment .nested-comment-stack .collapse-line:focus-visible::before {
+  background-color: hsl(235deg, 100%, 60%);
+}
+.comment .nested-comment-stack .collapse-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background-color: hsl(235deg, 50%, 74%);
+  transition: background-color 100ms ease-in-out;
+}
+.comment .footer {
+  display: flex;
 }
 
 /*# sourceMappingURL=output.css.map */
