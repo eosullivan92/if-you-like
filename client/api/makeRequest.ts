@@ -6,7 +6,9 @@ type RequestOptions = {
 }
 
 type RequestData = {
+	title?: string
 	message?: string
+	body?: string
 	parentId?: string
 }
 

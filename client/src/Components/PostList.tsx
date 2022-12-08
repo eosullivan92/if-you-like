@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { getPosts } from '../../api/posts'
+import { createPost, getPosts } from '../../api/posts'
+
 import { useAsync } from '../../hooks/useAsync'
 
 type PostTitle = {

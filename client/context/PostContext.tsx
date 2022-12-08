@@ -31,6 +31,11 @@ export type Post = {
 	comments?: CommentType[]
 }
 
+export type PostFormType = {
+	title: string
+	body: string
+}
+
 export type CommentType = {
 	id: string
 	message: string

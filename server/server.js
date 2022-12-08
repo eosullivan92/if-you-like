@@ -105,6 +105,29 @@ app.get('/posts/:id', async (req, res) => {
 	)
 })
 
+app.post('/posts', async (req, res) => {
+	if (req.body.body === '' || req.body.body === null) {
+		return res.send(app.httpErrors.badRequest('Message is required'))
+	}
+
+	if (req.body.title === '' || req.body.title === null) {
+		return res.send(app.httpErrors.badRequest('Title is required'))
+	}
+
+	return await commitToDb(
+		prisma.post.create({
+			data: {
+				title: req.body.title,
+				body: req.body.body,
+			},
+			select: {
+				id: true,
+				title: true,
+			},
+		})
+	)
+})
+
 app.post('/posts/:id/comments', async (req, res) => {
 	//error
 	if (req.body.message === '' || req.body.message === null) {
