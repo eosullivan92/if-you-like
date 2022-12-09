@@ -22,8 +22,6 @@ type CommentGroup = {
 	[key: string]: CommentType[]
 }
 
-// type CommentKey = keyof CommentGroup
-
 export type PostType = {
 	id: string
 	title: string

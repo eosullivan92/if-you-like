@@ -19,6 +19,12 @@ export function createPost(post: PostFormType) {
 
 //TODO: DELETE
 
+export function deletePost(id: string) {
+	return makeRequest(`/posts/${id}`, {
+		method: 'DELETE',
+	})
+}
+
 //TODO: UPDATE
 
 //UPVOTE / DOWNVOTE

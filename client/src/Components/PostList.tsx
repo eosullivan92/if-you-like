@@ -1,7 +1,6 @@
-import { createPost, getPosts } from '../../api/posts'
 import { PostType } from '../../context/PostContext'
-
-import { useAsync } from '../../hooks/useAsync'
+import { FaHeart } from 'react-icons/fa'
+import { IconBtn } from './IconButton'
 
 type PostTitle = {
 	id: string
@@ -22,9 +21,19 @@ export const PostList = ({ postList, loading, error }: PostListProps) => {
 		<>
 			{postList?.map((post: PostTitle) => {
 				return (
-					<h1 key={post.id}>
-						<a href={`/posts/${post.id}`}>{post.title}</a>
-					</h1>
+					<div className="post-title" key={post.id}>
+						<h1>
+							<a href={`/posts/${post.id}`}>{post.title}</a>
+						</h1>
+						<div className="footer">
+							<IconBtn
+								Icon={FaHeart}
+								aria-label="Like"
+								// onClick={ontoggleCommentLike}
+								// disabled={toggleCommentLikeFn.loading}
+							/>
+						</div>
+					</div>
 				)
 			})}
 		</>

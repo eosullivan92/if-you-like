@@ -12,6 +12,7 @@ async function seed() {
 		data: {
 			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pellentesque elit id orci porttitor lobortis. Cras bibendum dolor nec ligula consequat, vitae dignissim elit sollicitudin. Curabitur porta elementum fringilla. Morbi porttitor ex eget mi vehicula, sed aliquam sem sodales. Morbi ultrices dictum massa, quis eleifend erat. Maecenas molestie, nisi in ultricies sagittis, ex elit mollis lorem, quis lacinia nisi lorem mollis massa. Curabitur dui turpis, scelerisque vitae augue a, volutpat laoreet dui. Sed condimentum molestie nunc vitae dictum. Pellentesque vel laoreet eros, a malesuada arcu. Quisque a justo mattis, iaculis magna vitae, mattis nulla. Proin a libero vestibulum, ornare neque vel, molestie turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
 			title: 'Post 1',
+			userId: eamonn.id,
 		},
 	})
 
@@ -19,6 +20,7 @@ async function seed() {
 		data: {
 			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pellentesque elit id orci porttitor lobortis. Cras bibendum dolor nec ligula consequat, vitae dignissim elit sollicitudin. Curabitur porta elementum fringilla. Morbi porttitor ex eget mi vehicula, sed aliquam sem sodales. Morbi ultrices dictum massa, quis eleifend erat. Maecenas molestie, nisi in ultricies sagittis, ex elit mollis lorem, quis lacinia nisi lorem mollis massa. Curabitur dui turpis, scelerisque vitae augue a, volutpat laoreet dui. Sed condimentum molestie nunc vitae dictum. Pellentesque vel laoreet eros, a malesuada arcu. Quisque a justo mattis, iaculis magna vitae, mattis nulla. Proin a libero vestibulum, ornare neque vel, molestie turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
 			title: 'Post 2',
+			userId: eamonn.id,
 		},
 	})
 

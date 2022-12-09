@@ -120,11 +120,36 @@ app.post('/posts', async (req, res) => {
 			data: {
 				title: req.body.title,
 				body: req.body.body,
+				userId: req.cookies.userId,
 			},
 			select: {
 				id: true,
 				title: true,
 			},
+		})
+	)
+})
+
+app.delete('/posts/:id', async (req, res) => {
+	const { userId } = await prisma.post.findUnique({
+		where: { id: req.params.id },
+		select: { userId: true },
+	})
+
+	console.log(userId)
+	// auth check
+	if (userId !== req.cookies.userId) {
+		return res.send(
+			app.httpErrors.unauthorized(
+				'You do not have permission to delete this post'
+			)
+		)
+	}
+
+	return await commitToDb(
+		prisma.post.delete({
+			where: { id: req.params.id },
+			select: { id: true },
 		})
 	)
 })
@@ -157,7 +182,7 @@ app.post('/posts/:id/comments', async (req, res) => {
 	)
 })
 
-app.put('/posts/:postId/comments/:commentId', async (req, res) => {
+app.put('/posts/:id/comments/:commentId', async (req, res) => {
 	//error check
 	if (req.body.message == '' || req.body.message == null) {
 		return res.send(app.httpErrors.badRequest('Message is required'))
@@ -186,7 +211,7 @@ app.put('/posts/:postId/comments/:commentId', async (req, res) => {
 	)
 })
 
-app.delete('/posts/:postId/comments/:commentId', async (req, res) => {
+app.delete('/posts/:id/comments/:commentId', async (req, res) => {
 	const { userId } = await prisma.comment.findUnique({
 		where: { id: req.params.commentId },
 		select: { userId: true },
@@ -209,7 +234,7 @@ app.delete('/posts/:postId/comments/:commentId', async (req, res) => {
 	)
 })
 
-app.post('/posts/:postId/comments/:commentId/toggleLike', async (req, res) => {
+app.post('/posts/:id/comments/:commentId/toggleLike', async (req, res) => {
 	const data = {
 		commentId: req.params.commentId,
 		userId: req.cookies.userId,

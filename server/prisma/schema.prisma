@@ -12,10 +12,15 @@ datasource db {
 
 // Top level, comments to be made on posts
 model Post {
-    id       String    @id @default(uuid())
-    title    String
-    body     String
-    comments Comment[]
+    id        String    @id @default(uuid())
+    title     String
+    body      String
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @default(now()) @updatedAt
+    comments  Comment[]
+    user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    likes     Like[]
 }
 
 // may need to add auth id from provider later
@@ -25,6 +30,7 @@ model User {
     name     String
     comments Comment[]
     likes    Like[]
+    posts    Post[]
 }
 
 // To allow for nested comments, each comment can has parentId and optional children. A child comment will have a parentId of it's parent comment
@@ -50,6 +56,8 @@ model Like {
     comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
     userId    String
     commentId String
+    Post      Post?   @relation(fields: [postId], references: [id])
+    postId    String?
 
     @@id([userId, commentId])
 }
