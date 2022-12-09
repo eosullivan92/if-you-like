@@ -1,25 +1,14 @@
-import { PostType } from '../../context/PostContext'
 import { FaHeart } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
+import { PostTitle, usePostList } from '../../context/PostListContext'
 
-type PostTitle = {
-	id: string
-	title: string
-}
-
-type PostListProps = {
-	postList: PostType[]
-	loading: boolean
-	error: string
-}
-
-export const PostList = ({ postList, loading, error }: PostListProps) => {
+export const PostList = () => {
+	const { loading, error, posts } = usePostList()
 	if (loading) return <h1>Loading</h1>
 	if (error) return <h1 className="error">Error</h1>
-
 	return (
 		<>
-			{postList?.map((post: PostTitle) => {
+			{posts?.map((post: PostTitle) => {
 				return (
 					<div className="post-title" key={post.id}>
 						<h1>

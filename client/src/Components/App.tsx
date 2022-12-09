@@ -1,37 +1,31 @@
 import { useEffect, useState } from 'react'
 import { createPost, getPosts } from '../../api/posts'
-
 import { useAsync } from '../../hooks/useAsync'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { PostList } from './PostList'
 import { Post } from './Post'
 import { PostProvider } from '../../context/PostContext'
+import { PostListProvider } from '../../context/PostListContext'
 import { Header } from './Header'
 import { PostForm } from './PostForm'
 import { useAsyncFn } from '../../hooks/useAsync'
 import { PostFormType, PostType } from '../../context/PostContext'
 
 function App() {
-	// TODO: Bring this into it's own context
-
-	const {
-		loading: getPostLoading,
-		error: getPostError,
-		value: posts,
-	} = useAsync(getPosts)
+	// TODO: Bring this into it's own context, or PostList component?
 	const {
 		loading: createPostLoading,
 		error: createPostError,
 		execute: createPostFn,
 	} = useAsyncFn(createPost)
+
 	const [createPostActive, setCreatePostActive] = useState<boolean>(false)
-	const [localPosts, setLocalPosts] = useState<PostType[]>([])
 
 	const onPostCreate = (post: PostFormType) => {
 		console.log(post)
 		return createPostFn(post).then(
 			(post: { id: string; title: string }) => {
-				setLocalPosts((prevPosts) => [post, ...posts])
+				// setLocalPosts((prevPosts) => [post, ...posts])
 			}
 		)
 	}
@@ -39,10 +33,6 @@ function App() {
 	const handleCreatePostActive = () => {
 		setCreatePostActive((prev) => !prev)
 	}
-
-	useEffect(() => {
-		setLocalPosts(posts)
-	}, [posts])
 
 	return (
 		<div className="container">
@@ -59,11 +49,9 @@ function App() {
 				<Route
 					path="/"
 					element={
-						<PostList
-							postList={localPosts}
-							loading={getPostLoading}
-							error={getPostError}
-						/>
+						<PostListProvider>
+							<PostList />
+						</PostListProvider>
 					}
 				/>
 				<Route

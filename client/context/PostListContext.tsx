@@ -1,11 +1,13 @@
 import React, { Context } from 'react'
-import { useContext, useMemo, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useAsync } from '../hooks/useAsync'
 import { getPosts } from '../api/posts'
 import { PostType } from './PostContext'
 
 interface PostListContextType {
-	postList: PostTitle[]
+	posts: PostTitle[]
+	loading: boolean
+	error: string
 	createLocalPost: (post: PostType) => void
 	updateLocalPost: (id: string, comment: string) => void
 	deleteLocalPost: (id: string) => void
@@ -21,6 +23,8 @@ export type PostTitle = {
 	title: string
 }
 
+type PostListType = PostTitle[] | undefined
+
 const PostListContext = React.createContext<Partial<PostListContextType>>({})
 
 export function usePostList() {
@@ -29,13 +33,26 @@ export function usePostList() {
 
 export function PostListProvider({ children }: Props) {
 	const { loading, error, value: postList } = useAsync(getPosts)
-	const [posts, setPosts] = useState([])
-
-	//TODO deleteLocalPost
+	const [posts, setPosts] = useState<PostListType>([])
 
 	//TODO createLocalPost
+	function createLocalPost(post: PostTitle) {
+		setPosts((prevPosts) => {
+			return [post, ...posts]
+		})
+	}
+
+	//TODO deleteLocalPost
+	function deleteLocalPost(id: string) {
+		setPosts((prevPosts) => {
+			return prevPosts.filter((post) => post.id !== id)
+		})
+	}
 
 	//TODO updateLocalPost
+	// function updateLocalPost(id: string, title: string, body: string) {
+
+	// }
 
 	//TODO move local post state from App to here
 
@@ -45,7 +62,7 @@ export function PostListProvider({ children }: Props) {
 	}, [postList])
 
 	return (
-		<PostListContext.Provider value={{ postList }}>
+		<PostListContext.Provider value={{ posts, loading, error }}>
 			{children}
 		</PostListContext.Provider>
 	)

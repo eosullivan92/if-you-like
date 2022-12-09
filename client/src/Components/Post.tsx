@@ -25,8 +25,8 @@ export const Post = () => {
 	}
 	const onPostDelete = () => {
 		return deletePostFn.execute(post.id).then(() => {
-			//TODO CLEAR LOCAL (NEED CONTEXT)
 			navigate('/')
+			// navigate seems to be clearing local state, test further
 		})
 	}
 	return (
