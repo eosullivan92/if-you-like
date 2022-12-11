@@ -1,20 +1,18 @@
 import { useState } from 'react'
-import { FaHeart } from 'react-icons/fa'
+import { FaHeart, FaEdit, FaTrash, FaRegHeart } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
 import { PostTitle, usePostList } from '../../context/PostListContext'
 import { PostForm } from './PostForm'
 import { PostFormType } from '../../context/PostListContext'
 import { useAsyncFn } from '../../hooks/useAsync'
-import { createPost } from '../../api/posts'
+import { createPost, deletePost, updatePost } from '../../api/posts'
 
 export const PostList = () => {
 	const [createPostActive, setCreatePostActive] = useState<boolean>(false)
+
 	const { loading, error, posts, createLocalPost } = usePostList()
-	const {
-		loading: createPostLoading,
-		error: createPostError,
-		execute: createPostFn,
-	} = useAsyncFn(createPost)
+	const createPostFn = useAsyncFn(createPost)
+
 	if (loading) return <h1>Loading</h1>
 	if (error) return <h1 className="error">Error</h1>
 
@@ -22,8 +20,8 @@ export const PostList = () => {
 		setCreatePostActive((prev) => !prev)
 	}
 
-	const onPostCreate = (post: PostFormType) => {
-		return createPostFn(post).then((post: PostTitle) => {
+	const onPostCreate = (title: string, body: string) => {
+		return createPostFn.execute({ title, body }).then((post: PostTitle) => {
 			createLocalPost(post)
 		})
 	}
@@ -35,8 +33,8 @@ export const PostList = () => {
 			</button>
 			<PostForm
 				onSubmit={onPostCreate}
-				loading={createPostLoading}
-				error={createPostError}
+				loading={createPostFn.loading}
+				error={createPostFn.error}
 				autoFocus
 				createPostActive={createPostActive}
 				handleCreatePostActive={handleCreatePostActive}
@@ -49,11 +47,13 @@ export const PostList = () => {
 						</h1>
 						<div className="footer">
 							<IconBtn
-								Icon={FaHeart}
+								Icon={FaRegHeart}
 								aria-label="Like"
 								// onClick={ontoggleCommentLike}
 								// disabled={toggleCommentLikeFn.loading}
-							/>
+							>
+								2
+							</IconBtn>
 						</div>
 					</div>
 				)

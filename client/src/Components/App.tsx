@@ -21,14 +21,6 @@ function App() {
 	return (
 		<div className="container">
 			<Header />
-			{/* <PostForm
-				onSubmit={onPostCreate}
-				loading={createPostLoading}
-				error={createPostError}
-				autoFocus
-				createPostActive={createPostActive}
-				handleCreatePostActive={handleCreatePostActive}
-			/> */}
 			<Routes>
 				<Route
 					path="/"

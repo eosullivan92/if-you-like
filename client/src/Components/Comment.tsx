@@ -38,7 +38,7 @@ export default function Comment({
 }: CommentProps) {
 	const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false)
 	const [isReplying, setIsReplying] = useState<boolean>(false)
-	const [isEditing, setIsEditing] = useState<boolean>(false)
+	const [isEditingComment, setIsEditingComment] = useState<boolean>(false)
 	const {
 		post,
 		getReplies,
@@ -71,7 +71,7 @@ export default function Comment({
 		return updateCommentFn
 			.execute({ postId: post.id, message, id })
 			.then((comment: CommentType) => {
-				setIsEditing(false)
+				setIsEditingComment(false)
 				updateLocalComment(id, comment.message)
 			})
 	}
@@ -101,7 +101,7 @@ export default function Comment({
 					</span>
 				</div>
 
-				{isEditing ? (
+				{isEditingComment ? (
 					<CommentForm
 						autoFocus
 						onSubmit={onCommentUpdate}
@@ -132,8 +132,10 @@ export default function Comment({
 							<IconBtn
 								Icon={FaEdit}
 								aria-label="edit"
-								onClick={() => setIsEditing((prev) => !prev)}
-								isActive={isEditing}
+								onClick={() =>
+									setIsEditingComment((prev) => !prev)
+								}
+								isActive={isEditingComment}
 							/>
 							<IconBtn
 								Icon={FaTrash}

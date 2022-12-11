@@ -9,7 +9,7 @@ interface PostListContextType {
 	loading: boolean
 	error: string
 	createLocalPost: (post: PostTitle) => void
-	updateLocalPost: (id: string, comment: string) => void
+	updateLocalPost: (post: PostType) => void
 	deleteLocalPost: (id: string) => void
 	toggleLocalPostLike: (id: string, addLike: boolean) => void
 }
@@ -39,7 +39,6 @@ export function usePostList() {
 export function PostListProvider({ children }: Props) {
 	const { loading, error, value: postList } = useAsync(() => getPosts())
 	const [posts, setPosts] = useState<PostListType>([])
-
 	//TODO createLocalPost
 	function createLocalPost(post: PostTitle) {
 		setPosts((prevPosts) => {
@@ -55,20 +54,32 @@ export function PostListProvider({ children }: Props) {
 	}
 
 	//TODO updateLocalPost
-	// function updateLocalPost(id: string, title: string, body: string) {
-
-	// }
+	function updateLocalPost(updatedPost: PostType) {
+		setPosts((prevPosts) => {
+			return prevPosts.map((post) =>
+				post.id === updatedPost.id ? { ...post, updatedPost } : post
+			)
+		})
+	}
 
 	//TODO move local post state from App to here
 
 	useEffect(() => {
 		if (postList === null) return
 		setPosts(postList)
+		console.log(posts)
 	}, [postList])
 
 	return (
 		<PostListContext.Provider
-			value={{ posts, loading, error, createLocalPost }}
+			value={{
+				posts,
+				loading,
+				error,
+				createLocalPost,
+				deleteLocalPost,
+				updateLocalPost,
+			}}
 		>
 			{children}
 		</PostListContext.Provider>

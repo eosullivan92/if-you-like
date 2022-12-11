@@ -5,10 +5,10 @@ import { PostFormType } from '../../context/PostListContext'
 type PostFormProps = {
 	loading: boolean
 	error: string
-	onSubmit: (post: PostFormType) => Promise<PostType>
+	onSubmit: (title: string, body: string) => Promise<PostFormType>
 	autoFocus: boolean
-	createPostActive: boolean
-	handleCreatePostActive: () => void
+	createPostActive?: boolean
+	handleCreatePostActive?: () => void
 }
 
 export const PostForm = ({
@@ -25,7 +25,7 @@ export const PostForm = ({
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-		onSubmit(postInput).then(() => {
+		onSubmit(postInput.title, postInput.body).then(() => {
 			setPostInput({
 				title: '',
 				body: '',

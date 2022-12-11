@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { makeRequest } from './makeRequest'
-import { PostFormType } from '../context/PostContext'
+import { PostFormType } from '../context/PostListContext'
 
 export function getPosts() {
 	return makeRequest('/posts')
@@ -26,5 +26,12 @@ export function deletePost(id: string) {
 }
 
 //TODO: UPDATE
+
+export function updatePost(id: string, post: PostFormType) {
+	return makeRequest(`/posts/${id}`, {
+		method: 'PUT',
+		data: post,
+	})
+}
 
 //UPVOTE / DOWNVOTE

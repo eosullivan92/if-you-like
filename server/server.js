@@ -153,6 +153,36 @@ app.delete('/posts/:id', async (req, res) => {
 	)
 })
 
+app.put(`/posts/:id`, async (req, res) => {
+	if (req.body.body === '' || req.body.body === null) {
+		return res.send(app.httpErrors.badRequest('Message is required'))
+	}
+
+	if (req.body.title === '' || req.body.title === null) {
+		return res.send(app.httpErrors.badRequest('Title is required'))
+	}
+
+	const { userId } = await prisma.post.findUnique({
+		where: { id: req.params.id },
+		select: { userId: true },
+	})
+
+	if (userId !== req.cookies.userId) {
+		return res.send(
+			app.httpErrors.unauthorized(
+				'You do not have permission to delete this post'
+			)
+		)
+	}
+	return await commitToDb(
+		prisma.post.update({
+			where: { id: req.body.id },
+			data: { title: req.body.post.title, body: req.body.post.body },
+			select: { id: true, title: true, body: true },
+		})
+	)
+})
+
 app.post('/posts/:id/comments', async (req, res) => {
 	//error
 	if (req.body.message === '' || req.body.message === null) {
