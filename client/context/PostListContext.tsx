@@ -8,7 +8,7 @@ interface PostListContextType {
 	posts: PostTitle[]
 	loading: boolean
 	error: string
-	createLocalPost: (post: PostType) => void
+	createLocalPost: (post: PostTitle) => void
 	updateLocalPost: (id: string, comment: string) => void
 	deleteLocalPost: (id: string) => void
 	toggleLocalPostLike: (id: string, addLike: boolean) => void
@@ -23,6 +23,11 @@ export type PostTitle = {
 	title: string
 }
 
+export type PostFormType = {
+	title: string
+	body: string
+}
+
 type PostListType = PostTitle[] | undefined
 
 const PostListContext = React.createContext<Partial<PostListContextType>>({})
@@ -32,13 +37,13 @@ export function usePostList() {
 }
 
 export function PostListProvider({ children }: Props) {
-	const { loading, error, value: postList } = useAsync(getPosts)
+	const { loading, error, value: postList } = useAsync(() => getPosts())
 	const [posts, setPosts] = useState<PostListType>([])
 
 	//TODO createLocalPost
 	function createLocalPost(post: PostTitle) {
 		setPosts((prevPosts) => {
-			return [post, ...posts]
+			return [post, ...prevPosts]
 		})
 	}
 
@@ -62,7 +67,9 @@ export function PostListProvider({ children }: Props) {
 	}, [postList])
 
 	return (
-		<PostListContext.Provider value={{ posts, loading, error }}>
+		<PostListContext.Provider
+			value={{ posts, loading, error, createLocalPost }}
+		>
 			{children}
 		</PostListContext.Provider>
 	)

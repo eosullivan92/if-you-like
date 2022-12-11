@@ -136,7 +136,6 @@ app.delete('/posts/:id', async (req, res) => {
 		select: { userId: true },
 	})
 
-	console.log(userId)
 	// auth check
 	if (userId !== req.cookies.userId) {
 		return res.send(

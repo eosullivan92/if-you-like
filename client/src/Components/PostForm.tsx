@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { PostType, PostFormType } from '../../context/PostContext'
+import { PostType } from '../../context/PostContext'
+import { PostFormType } from '../../context/PostListContext'
 
 type PostFormProps = {
 	loading: boolean
@@ -14,7 +15,6 @@ export const PostForm = ({
 	loading,
 	error,
 	onSubmit,
-	autoFocus,
 	createPostActive,
 	handleCreatePostActive,
 }: PostFormProps) => {
@@ -25,7 +25,6 @@ export const PostForm = ({
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-		console.log(postInput)
 		onSubmit(postInput).then(() => {
 			setPostInput({
 				title: '',
@@ -51,6 +50,7 @@ export const PostForm = ({
 								title: e.target.value,
 							})
 						}
+						value={postInput.title}
 					/>
 					<textarea
 						onChange={(e) =>
@@ -61,6 +61,7 @@ export const PostForm = ({
 						}
 						className="message-input"
 						aria-label="text-input"
+						value={postInput.body}
 					/>
 					<button
 						className="btn"

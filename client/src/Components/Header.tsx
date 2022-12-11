@@ -1,17 +1,9 @@
 import { useState } from 'react'
 
-type HeaderProps = {
-	handleCreatePostActive: () => void
-}
-
-export const Header = ({ handleCreatePostActive }: HeaderProps) => {
+export const Header = () => {
 	return (
 		<header className="navbar">
 			<h1>If You Like</h1>
-
-			<button className="btn" onClick={() => handleCreatePostActive()}>
-				+ Create Post
-			</button>
 		</header>
 	)
 }
