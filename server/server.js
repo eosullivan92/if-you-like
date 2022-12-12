@@ -176,8 +176,8 @@ app.put(`/posts/:id`, async (req, res) => {
 	}
 	return await commitToDb(
 		prisma.post.update({
-			where: { id: req.body.id },
-			data: { title: req.body.post.title, body: req.body.post.body },
+			where: { id: req.params.id },
+			data: { title: req.body.title, body: req.body.body },
 			select: { id: true, title: true, body: true },
 		})
 	)
