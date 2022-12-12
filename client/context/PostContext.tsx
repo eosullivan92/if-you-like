@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useAsync } from '../hooks/useAsync'
 import { getPost } from '../api/posts'
 import { useContext, useMemo, useState, useEffect } from 'react'
+import { usePostList } from './PostListContext'
 
 interface PostContextType {
 	post: PostType
@@ -52,7 +53,13 @@ export function usePost() {
 
 export function PostProvider({ children }: Props) {
 	const { id } = useParams()
-	const { loading, error, value: post } = useAsync(() => getPost(id), [id])
+	const { posts } = usePostList()
+
+	const {
+		loading,
+		error,
+		value: post,
+	} = useAsync(() => getPost(id), [id, posts])
 	const [comments, setComments] = useState([])
 
 	//group comments by parent id

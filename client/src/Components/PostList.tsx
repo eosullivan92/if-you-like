@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { FaHeart, FaEdit, FaTrash, FaRegHeart } from 'react-icons/fa'
+import { FaRegHeart } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
 import { PostTitle, usePostList } from '../../context/PostListContext'
 import { PostForm } from './PostForm'
@@ -8,21 +7,23 @@ import { useAsyncFn } from '../../hooks/useAsync'
 import { createPost, deletePost, updatePost } from '../../api/posts'
 
 export const PostList = () => {
-	const [createPostActive, setCreatePostActive] = useState<boolean>(false)
-
-	const { loading, error, posts, createLocalPost } = usePostList()
+	const {
+		loading,
+		error,
+		posts,
+		createLocalPost,
+		createPostActive,
+		handleCreatePostActive,
+	} = usePostList()
 	const createPostFn = useAsyncFn(createPost)
 
 	if (loading) return <h1>Loading</h1>
 	if (error) return <h1 className="error">Error</h1>
 
-	const handleCreatePostActive = () => {
-		setCreatePostActive((prev) => !prev)
-	}
-
 	const onPostCreate = (title: string, body: string) => {
 		return createPostFn.execute({ title, body }).then((post: PostTitle) => {
 			createLocalPost(post)
+			handleCreatePostActive()
 		})
 	}
 

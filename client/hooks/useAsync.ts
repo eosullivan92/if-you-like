@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { CommentType, PostType } from '../context/PostContext'
+import { PostTitle } from '../context/PostListContext'
 
-export function useAsync(func: Function, dependencies: string[] = []) {
+type DependenciesType = [id: string, posts?: PostTitle[]] | []
+
+export function useAsync(func: Function, dependencies: DependenciesType = []) {
 	// used in useEffect, execute runs immediately, reinvokes when dependencies change
 	const { execute, ...state } = useAsyncInternal(func, dependencies, true)
 
@@ -12,14 +15,17 @@ export function useAsync(func: Function, dependencies: string[] = []) {
 	return state
 }
 
-export function useAsyncFn(func: Function, dependencies: [] = []) {
+export function useAsyncFn(
+	func: Function,
+	dependencies: DependenciesType = []
+) {
 	//returns a function instead of running automatically
 	return useAsyncInternal(func, dependencies, false)
 }
 
 export function useAsyncInternal(
 	func: Function,
-	dependencies?: string[],
+	dependencies: DependenciesType,
 	initialLoading = false
 ) {
 	const [loading, setLoading] = useState<boolean>(initialLoading)

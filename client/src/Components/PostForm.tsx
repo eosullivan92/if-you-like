@@ -9,19 +9,19 @@ type PostFormProps = {
 	autoFocus: boolean
 	createPostActive?: boolean
 	handleCreatePostActive?: () => void
+	initialValue?: PostFormType
 }
 
 export const PostForm = ({
 	loading,
 	error,
 	onSubmit,
+	autoFocus,
 	createPostActive,
 	handleCreatePostActive,
+	initialValue = { title: '', body: '' },
 }: PostFormProps) => {
-	const [postInput, setPostInput] = useState<PostFormType>({
-		title: '',
-		body: '',
-	})
+	const [postInput, setPostInput] = useState<PostFormType>(initialValue)
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
@@ -30,7 +30,6 @@ export const PostForm = ({
 				title: '',
 				body: '',
 			})
-			handleCreatePostActive()
 		})
 	}
 
@@ -44,6 +43,7 @@ export const PostForm = ({
 						id="title"
 						name="title"
 						placeholder="Title"
+						autoFocus={autoFocus}
 						onChange={(e) =>
 							setPostInput({
 								...postInput,

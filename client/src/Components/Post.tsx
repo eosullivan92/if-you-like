@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { createComment } from '../../api/comments'
 import { usePost, PostType } from '../../context/PostContext'
 import { useAsyncFn } from '../../hooks/useAsync'
@@ -9,11 +9,18 @@ import { deletePost, updatePost } from '../../api/posts'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
 import { PostForm } from './PostForm'
+import { usePostList } from '../../context/PostListContext'
 
 export const Post = () => {
 	const navigate = useNavigate()
-	const [isEditingPost, setIsEditingPost] = useState(false)
 	const { post, rootComments, createLocalComment } = usePost()
+	const {
+		posts,
+		deleteLocalPost,
+		updateLocalPost,
+		createPostActive,
+		handleCreatePostActive,
+	} = usePostList()
 	const {
 		loading,
 		error,
@@ -29,23 +36,38 @@ export const Post = () => {
 	}
 
 	const onPostDelete = () => {
-		return deletePostFn.execute(post.id).then(() => {
+		return deletePostFn.execute(post.id).then(({ id }: { id: string }) => {
+			deleteLocalPost(id)
 			navigate('/')
 		})
 	}
 
 	const onPostUpdate = (title: string, body: string) => {
-		return updatePostFn.execute({ id: post.id, title, body })
+		return updatePostFn
+			.execute({ id: post.id, title, body })
+			.then((post: PostType) => {
+				updateLocalPost(post)
+			})
+			.then(() => {
+				handleCreatePostActive()
+			})
 	}
 
 	return (
 		<>
 			<div className="post">
-				{isEditingPost ? (
+				<button className="btn">
+					<Link to="/">Back to all posts</Link>
+				</button>
+				{createPostActive ? (
 					<PostForm
 						loading={updatePostFn.loading}
 						error={updatePostFn.error}
 						onSubmit={onPostUpdate}
+						autoFocus
+						createPostActive={createPostActive}
+						handleCreatePostActive={handleCreatePostActive}
+						initialValue={post}
 					/>
 				) : (
 					<>
@@ -58,8 +80,7 @@ export const Post = () => {
 					<IconBtn
 						Icon={FaEdit}
 						aria-label="edit"
-						// onClick={() => setIsEditingPost((prev) => !prev)}
-						// isActive={isEditingPost}
+						onClick={handleCreatePostActive}
 					/>
 					<IconBtn
 						Icon={FaTrash}

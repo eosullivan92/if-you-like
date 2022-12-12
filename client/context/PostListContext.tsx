@@ -8,6 +8,8 @@ interface PostListContextType {
 	posts: PostTitle[]
 	loading: boolean
 	error: string
+	createPostActive: boolean
+	handleCreatePostActive: () => void
 	createLocalPost: (post: PostTitle) => void
 	updateLocalPost: (post: PostType) => void
 	deleteLocalPost: (id: string) => void
@@ -37,9 +39,14 @@ export function usePostList() {
 }
 
 export function PostListProvider({ children }: Props) {
+	const [createPostActive, setCreatePostActive] = useState<boolean>(false)
 	const { loading, error, value: postList } = useAsync(() => getPosts())
 	const [posts, setPosts] = useState<PostListType>([])
-	//TODO createLocalPost
+
+	const handleCreatePostActive = () => {
+		setCreatePostActive((prev) => !prev)
+	}
+
 	function createLocalPost(post: PostTitle) {
 		setPosts((prevPosts) => {
 			return [post, ...prevPosts]
@@ -56,9 +63,16 @@ export function PostListProvider({ children }: Props) {
 	//TODO updateLocalPost
 	function updateLocalPost(updatedPost: PostType) {
 		setPosts((prevPosts) => {
-			return prevPosts.map((post) =>
-				post.id === updatedPost.id ? { ...post, updatedPost } : post
-			)
+			return prevPosts.map((post) => {
+				if (post.id == updatedPost.id) {
+					return {
+						...post,
+						title: updatedPost.title,
+					}
+				} else {
+					return post
+				}
+			})
 		})
 	}
 
@@ -67,7 +81,6 @@ export function PostListProvider({ children }: Props) {
 	useEffect(() => {
 		if (postList === null) return
 		setPosts(postList)
-		console.log(posts)
 	}, [postList])
 
 	return (
@@ -76,6 +89,8 @@ export function PostListProvider({ children }: Props) {
 				posts,
 				loading,
 				error,
+				createPostActive,
+				handleCreatePostActive,
 				createLocalPost,
 				deleteLocalPost,
 				updateLocalPost,
