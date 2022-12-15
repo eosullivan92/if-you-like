@@ -13,9 +13,9 @@
 	"type": "module",
 	"license": "ISC",
 	"dependencies": {
+		"@fastify/sensible": "^5.1.1",
 		"@fastify/cookie": "^8.3.0",
 		"@fastify/cors": "^8.2.0",
-		"@fastify/sensible": "^5.1.1",
 		"@prisma/client": "^4.6.1",
 		"dotenv": "^16.0.3",
 		"fastify": "^4.10.2"

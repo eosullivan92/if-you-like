@@ -1,10 +1,10 @@
-import { FaRegHeart } from 'react-icons/fa'
+import { FaRegHeart, FaHeart } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
-import { PostTitle, usePostList } from '../../context/PostListContext'
+import { usePostList } from '../../context/PostListContext'
 import { PostForm } from './PostForm'
-import { PostFormType } from '../../context/PostListContext'
+import { PostTitleType } from '../../types/types'
 import { useAsyncFn } from '../../hooks/useAsync'
-import { createPost, deletePost, updatePost } from '../../api/posts'
+import { createPost, togglePostLike } from '../../api/posts'
 
 export const PostList = () => {
 	const {
@@ -14,17 +14,28 @@ export const PostList = () => {
 		createLocalPost,
 		createPostActive,
 		handleCreatePostActive,
+		toggleLocalPostLike,
 	} = usePostList()
 	const createPostFn = useAsyncFn(createPost)
-
+	const togglePostLikeFn = useAsyncFn(togglePostLike)
 	if (loading) return <h1>Loading</h1>
 	if (error) return <h1 className="error">Error</h1>
 
 	const onPostCreate = (title: string, body: string) => {
-		return createPostFn.execute({ title, body }).then((post: PostTitle) => {
-			createLocalPost(post)
-			handleCreatePostActive()
-		})
+		return createPostFn
+			.execute({ title, body })
+			.then((post: PostTitleType) => {
+				createLocalPost(post)
+				handleCreatePostActive()
+			})
+	}
+
+	const onTogglePostLike = (id: string) => {
+		return togglePostLikeFn
+			.execute(id)
+			.then(({ addLike }: { addLike: boolean }) => {
+				toggleLocalPostLike(id, addLike)
+			})
 	}
 
 	return (
@@ -40,7 +51,7 @@ export const PostList = () => {
 				createPostActive={createPostActive}
 				handleCreatePostActive={handleCreatePostActive}
 			/>
-			{posts?.map((post: PostTitle) => {
+			{posts?.map((post: PostTitleType) => {
 				return (
 					<div className="post-title" key={post.id}>
 						<h1>
@@ -48,12 +59,12 @@ export const PostList = () => {
 						</h1>
 						<div className="footer">
 							<IconBtn
-								Icon={FaRegHeart}
+								Icon={post.likedByMe ? FaHeart : FaRegHeart}
 								aria-label="Like"
-								// onClick={ontoggleCommentLike}
-								// disabled={toggleCommentLikeFn.loading}
+								onClick={() => onTogglePostLike(post.id)}
+								disabled={togglePostLikeFn.loading}
 							>
-								2
+								{post.likeCount}
 							</IconBtn>
 						</div>
 					</div>

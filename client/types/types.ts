@@ -33,6 +33,8 @@ export type PostType = {
 export type PostTitleType = {
 	id: string
 	title: string
+	likeCount: number
+	likedByMe: boolean
 }
 
 export type PostFormType = {

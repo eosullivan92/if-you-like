@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { makeRequest } from './makeRequest'
-import { PostFormType } from '../context/PostListContext'
-import { PostType } from '../context/PostContext'
+import { PostFormType, PostType } from '../types/types'
 
 export function getPosts() {
 	return makeRequest('/posts')
@@ -18,15 +17,11 @@ export function createPost(post: PostFormType) {
 	})
 }
 
-//TODO: DELETE
-
 export function deletePost(id: string) {
 	return makeRequest(`/posts/${id}`, {
 		method: 'DELETE',
 	})
 }
-
-//TODO: UPDATE
 
 export function updatePost({ id, title, body }: PostType) {
 	return makeRequest(`/posts/${id}`, {
@@ -35,4 +30,6 @@ export function updatePost({ id, title, body }: PostType) {
 	})
 }
 
-//UPVOTE / DOWNVOTE
+export function togglePostLike(id: string) {
+	return makeRequest(`posts/${id}/toggleLike`, { method: 'POST' })
+}

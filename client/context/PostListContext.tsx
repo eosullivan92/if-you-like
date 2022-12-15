@@ -52,6 +52,30 @@ export function PostListProvider({ children }: ChildrenProps) {
 		})
 	}
 
+	const toggleLocalPostLike = (id: string, addLike: boolean) => {
+		setPosts((prevPosts) => {
+			return prevPosts.map((post) => {
+				if (id === post.id) {
+					if (addLike) {
+						return {
+							...post,
+							likeCount: post.likeCount + 1,
+							likedByMe: true,
+						}
+					} else {
+						return {
+							...post,
+							likeCount: post.likeCount - 1,
+							likedByMe: false,
+						}
+					}
+				} else {
+					return post
+				}
+			})
+		})
+	}
+
 	useEffect(() => {
 		if (postList === null) return
 		setPosts(postList)
@@ -68,6 +92,7 @@ export function PostListProvider({ children }: ChildrenProps) {
 				createLocalPost,
 				deleteLocalPost,
 				updateLocalPost,
+				toggleLocalPostLike,
 			}}
 		>
 			{children}
