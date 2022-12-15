@@ -4,46 +4,13 @@ import { useAsync } from '../hooks/useAsync'
 import { getPost } from '../api/posts'
 import { useContext, useMemo, useState, useEffect } from 'react'
 import { usePostList } from './PostListContext'
-
-interface PostContextType {
-	post: PostType
-	rootComments: CommentType[]
-	getReplies: (parentId: string) => CommentType[]
-	createLocalComment: (comment: CommentType) => void
-	updateLocalComment: (id: string, comment: string) => void
-	deleteLocalComment: (id: string) => void
-	toggleLocalCommentLike: (id: string, addLike: boolean) => void
-}
-
-type Props = {
-	children: React.ReactNode
-}
-
-type CommentGroup = {
-	[key: string]: CommentType[]
-}
-
-export type PostType = {
-	id: string
-	title: string
-	body: string
-	comments?: CommentType[]
-}
-
-export type CommentType = {
-	id: string
-	message: string
-	parentId?: string
-	createdAt: string
-	user: User
-	likeCount: number
-	likedByMe: boolean
-}
-
-export type User = {
-	id: string
-	name: string
-}
+import {
+	PostContextType,
+	CommentGroup,
+	PostType,
+	CommentType,
+	ChildrenProps,
+} from '../types/types'
 
 const PostContext = React.createContext<Partial<PostContextType>>({})
 
@@ -51,7 +18,7 @@ export function usePost() {
 	return useContext(PostContext)
 }
 
-export function PostProvider({ children }: Props) {
+export function PostProvider({ children }: ChildrenProps) {
 	const { id } = useParams()
 	const { posts } = usePostList()
 
@@ -75,17 +42,17 @@ export function PostProvider({ children }: Props) {
 		return group
 	}, [comments])
 
-	function getReplies(parentId: string) {
+	const getReplies = (parentId: string) => {
 		return commentsByParentId[parentId as keyof CommentGroup]
 	}
 
-	function createLocalComment(comment: CommentType) {
+	const createLocalComment = (comment: CommentType) => {
 		setComments((prevComments) => {
 			return [comment, ...comments]
 		})
 	}
 
-	function updateLocalComment(id: string, message: string) {
+	const updateLocalComment = (id: string, message: string) => {
 		setComments((prevComments) => {
 			return prevComments.map((comment) =>
 				comment.id == id ? { ...comment, message } : comment
@@ -93,13 +60,13 @@ export function PostProvider({ children }: Props) {
 		})
 	}
 
-	function deleteLocalComment(id: string) {
+	const deleteLocalComment = (id: string) => {
 		setComments((prevComments) => {
 			return prevComments.filter((comment) => comment.id !== id)
 		})
 	}
 
-	function toggleLocalCommentLike(id: string, addLike: boolean) {
+	const toggleLocalCommentLike = (id: string, addLike: boolean) => {
 		setComments((prevComments) => {
 			return prevComments.map((comment) => {
 				if (id == comment.id) {

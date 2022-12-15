@@ -1,4 +1,4 @@
-import { CommentType, User } from '../../context/PostContext'
+import { CommentType, CommentProps } from '../../types/types'
 import { CommentForm } from './CommentForm'
 import { useState } from 'react'
 import { usePost } from '../../context/PostContext'
@@ -13,15 +13,6 @@ import {
 	toggleCommentLike,
 	updateComment,
 } from '../../api/comments'
-
-type CommentProps = {
-	id: string
-	message: string
-	user: User
-	createdAt: string
-	likeCount: number
-	likedByMe: boolean
-}
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
 	dateStyle: 'medium',
@@ -54,7 +45,7 @@ export default function Comment({
 	const deleteCommentFn = useAsyncFn(deleteComment)
 	const toggleCommentLikeFn = useAsyncFn(toggleCommentLike)
 
-	function onCommentReply(message: string) {
+	const onCommentReply = (message: string) => {
 		return createCommentFn
 			.execute({
 				postId: post.id,
@@ -67,7 +58,7 @@ export default function Comment({
 			})
 	}
 
-	function onCommentUpdate(message: string) {
+	const onCommentUpdate = (message: string) => {
 		return updateCommentFn
 			.execute({ postId: post.id, message, id })
 			.then((comment: CommentType) => {
@@ -76,7 +67,7 @@ export default function Comment({
 			})
 	}
 
-	function onCommentDelete() {
+	const onCommentDelete = () => {
 		return deleteCommentFn
 			.execute({ postId: post.id, id })
 			.then(({ id }: { id: string }) => {
@@ -84,7 +75,7 @@ export default function Comment({
 			})
 	}
 
-	function ontoggleCommentLike() {
+	const ontoggleCommentLike = () => {
 		return toggleCommentLikeFn
 			.execute({ postId: post.id, id })
 			.then(({ addLike }: { addLike: boolean }) =>

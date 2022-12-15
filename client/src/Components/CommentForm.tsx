@@ -1,13 +1,5 @@
 import React, { FormEventHandler, useState } from 'react'
-import { CommentType } from '../../context/PostContext'
-
-type CommentFormProps = {
-	loading: boolean
-	error: string
-	onSubmit: (message: string) => Promise<CommentType>
-	autoFocus: boolean
-	initialValue?: string
-}
+import { CommentFormProps } from '../../types/types'
 
 export function CommentForm({
 	loading,

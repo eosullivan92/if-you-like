@@ -1,13 +1,4 @@
-import { IconType } from 'react-icons/lib'
-
-type IconBtnProps = {
-	Icon: IconType
-	isActive?: boolean
-	color?: string
-	onClick?: () => void
-	children?: React.ReactNode
-	disabled?: boolean
-}
+import { IconBtnProps } from '../../types/types'
 
 export function IconBtn({
 	Icon,

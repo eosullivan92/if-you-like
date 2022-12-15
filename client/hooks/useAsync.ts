@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { CommentType, PostType } from '../context/PostContext'
-import { PostTitle } from '../context/PostListContext'
+import { CommentType, PostType, PostTitleType } from '../types/types'
 
-type DependenciesType = [id: string, posts?: PostTitle[]] | []
+type DependenciesType = [id: string, posts?: PostTitleType[]] | []
 
 export function useAsync(func: Function, dependencies: DependenciesType = []) {
 	// used in useEffect, execute runs immediately, reinvokes when dependencies change

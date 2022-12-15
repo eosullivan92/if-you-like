@@ -1,12 +1,8 @@
 import React from 'react'
 import Comment from './Comment'
-import { CommentType } from '../../context/PostContext'
+import { CommentListProps } from '../../types/types'
 
-type PropsType = {
-	comments: CommentType[]
-}
-
-export default function CommentList(props: PropsType) {
+export default function CommentList(props: CommentListProps) {
 	return (
 		<>
 			{props.comments.map((comment) => (
