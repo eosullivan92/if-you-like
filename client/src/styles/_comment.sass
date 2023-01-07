@@ -1,44 +1,45 @@
+@use 'color'
 
 .comment
 
-	.comment-stack 
-		margin: 0.5rem 0
-
-	.comment-stack:last-child 
-		margin-bottom: 0
-
-
-
-	.nested-comment-stack
-		display: flex
-
-		.collapse-line 
-			border: none
-			background: none
-			padding: 0
-			width: 15px
-			margin-top: 0.5rem
-			position: relative
-			cursor: pointer
-			outline: none
-			transform: translateX(-50%)
+	.header 
 		
-
-		.collapse-line:hover::before,
-		.collapse-line:focus-visible::before 
-			background-color: hsl(235, 100%, 60%)
-		
-
-		.collapse-line::before 
-			content: ''
-			position: absolute
-			top: 0
-			bottom: 0
-			left: 50%
-			width: 1px
-			background-color: hsl(235, 50%, 74%)
-			transition: background-color 100ms ease-in-out
-
+		.date
+			margin-right: 1em
 
 	.footer
 		display: flex
+		
+
+.nested-comment-stack
+	display: flex
+
+	.collapse-line 
+		border: none
+		background: none
+		padding: 0
+		width: 15px
+		margin-top: 0.5rem
+		position: relative
+		cursor: pointer
+		outline: none
+		transform: translateX(-50%)
+	
+
+	.collapse-line:hover::before,
+	.collapse-line:focus-visible::before 
+		background-color: color.$primary-color-2
+	
+
+	.collapse-line::before 
+		content: ''
+		position: absolute
+		top: 0
+		bottom: 0
+		left: 50%
+		width: 1px
+		background-color: color.$primary-color-opaque
+
+		transition: background-color 100ms ease-in-out
+
+

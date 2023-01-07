@@ -60,7 +60,7 @@ export const Post = () => {
 				<button className="btn">
 					<Link to="/">Back to all posts</Link>
 				</button>
-				{createPostActive ? (
+				{createPostActive && (
 					<PostForm
 						loading={updatePostFn.loading}
 						error={updatePostFn.error}
@@ -70,13 +70,11 @@ export const Post = () => {
 						handleCreatePostActive={handleCreatePostActive}
 						initialValue={post}
 					/>
-				) : (
-					<>
-						<h1>{post.title}</h1>
-						<article>{post.body}</article>
-					</>
 				)}
-
+				<div className="post-content">
+					<h1>{post.title}</h1>
+					<article>{post.body}</article>
+				</div>
 				<div className="footer">
 					<IconBtn
 						Icon={FaEdit}

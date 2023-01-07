@@ -141,17 +141,17 @@ export default function Comment({
 							{deleteCommentFn.error}
 						</div>
 					)}
-					{isReplying && (
-						<div className="mt-1 ml-3">
-							<CommentForm
-								autoFocus
-								onSubmit={onCommentReply}
-								loading={createCommentFn.loading}
-								error={createCommentFn.error}
-							/>
-						</div>
-					)}
 				</div>
+				{isReplying && (
+					<div className="mt-1 ml-3">
+						<CommentForm
+							autoFocus
+							onSubmit={onCommentReply}
+							loading={createCommentFn.loading}
+							error={createCommentFn.error}
+						/>
+					</div>
+				)}
 				{childComments?.length > 0 && (
 					<>
 						{!areChildrenHidden && (

@@ -72,7 +72,7 @@ app.get('/posts', async (req, res) => {
 					const { _count } = post
 					return {
 						...post,
-						likedByMe: likes.find(
+						likedByMe: likes.some(
 							(like) => like.postId === post.id
 						),
 						likeCount: _count.likes,
@@ -121,7 +121,7 @@ app.get('/posts/:id', async (req, res) => {
 						return {
 							...commentFields,
 							// boolean - if like in this list has comment id that matches the current comment id.
-							likedByMe: likes.find(
+							likedByMe: likes.some(
 								(like) => like.commentId === comment.id
 							),
 							likeCount: _count.likes,

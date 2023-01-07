@@ -80,7 +80,7 @@ a {
   padding: 0.5em;
   font-size: inherit;
   font-family: inherit;
-  border: 2px solid hsl(235deg, 50%, 74%);
+  border: 2px solid hsla(32deg, 100%, 40%, 0.6);
   line-height: 1.4;
 }
 .comment-form-row button {
@@ -95,16 +95,17 @@ a {
   align-items: center;
 }
 
-.comment .comment-stack {
-  margin: 0.5rem 0;
+.comment .header .date {
+  margin-right: 1em;
 }
-.comment .comment-stack:last-child {
-  margin-bottom: 0;
-}
-.comment .nested-comment-stack {
+.comment .footer {
   display: flex;
 }
-.comment .nested-comment-stack .collapse-line {
+
+.nested-comment-stack {
+  display: flex;
+}
+.nested-comment-stack .collapse-line {
   border: none;
   background: none;
   padding: 0;
@@ -115,22 +116,27 @@ a {
   outline: none;
   transform: translateX(-50%);
 }
-.comment .nested-comment-stack .collapse-line:hover::before,
-.comment .nested-comment-stack .collapse-line:focus-visible::before {
-  background-color: hsl(235deg, 100%, 60%);
+.nested-comment-stack .collapse-line:hover::before,
+.nested-comment-stack .collapse-line:focus-visible::before {
+  background-color: hsl(32deg, 100%, 40%);
 }
-.comment .nested-comment-stack .collapse-line::before {
+.nested-comment-stack .collapse-line::before {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
   width: 1px;
-  background-color: hsl(235deg, 50%, 74%);
+  background-color: hsla(32deg, 100%, 40%, 0.6);
   transition: background-color 100ms ease-in-out;
 }
-.comment .footer {
-  display: flex;
+
+.comment-stack {
+  margin: 0.5rem 0;
+}
+
+.comment-stack:last-child {
+  margin-bottom: 0;
 }
 
 .navbar {
@@ -157,11 +163,11 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 2px solid hsla(32deg, 100%, 40%, 0.6);
   border-radius: 5px;
-  width: 300px;
+  width: 400px;
   min-height: 450px;
   background-color: hsl(45deg, 100%, 96%);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 6px;
   padding: 1em;
 }
 .post-form-modal .modal-header {
@@ -208,6 +214,12 @@ a {
 }
 .post-form-modal form button {
   padding: 0.5em;
+}
+
+.post .footer {
+  margin-top: 1em;
+  display: flex;
+  gap: 0.3em;
 }
 
 /*# sourceMappingURL=output.css.map */

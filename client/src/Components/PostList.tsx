@@ -64,7 +64,7 @@ export const PostList = () => {
 								onClick={() => onTogglePostLike(post.id)}
 								disabled={togglePostLikeFn.loading}
 							>
-								{post.likeCount}
+								{post?.likeCount}
 							</IconBtn>
 						</div>
 					</div>
