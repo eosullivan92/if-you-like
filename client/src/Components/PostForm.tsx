@@ -22,11 +22,23 @@ export const PostForm = ({
 		})
 	}
 
+	const handleClose = () => {
+		handleCreatePostActive()
+		setPostInput({
+			title: '',
+			body: '',
+		})
+	}
+
 	return (
 		<div className={`post-form-modal ${createPostActive ? '' : 'hide'}`}>
+			<div className="modal-header">
+				<h2>Create Post</h2>
+				<button onClick={() => handleClose()}>&times;</button>
+			</div>
 			<form onSubmit={handleSubmit}>
-				<div className="comment-form-row">
-					<label htmlFor="title" />
+				<div className="form-input-control">
+					<label htmlFor="title">Title:</label>
 					<input
 						type="text"
 						id="title"
@@ -41,6 +53,9 @@ export const PostForm = ({
 						}
 						value={postInput.title}
 					/>
+				</div>
+				<div className="form-input-control">
+					<label htmlFor="post">Post:</label>
 					<textarea
 						onChange={(e) =>
 							setPostInput({
@@ -48,18 +63,21 @@ export const PostForm = ({
 								body: e.target.value,
 							})
 						}
+						id="post"
+						name="post"
+						placeholder="Post"
 						className="message-input"
 						aria-label="text-input"
 						value={postInput.body}
 					/>
-					<button
-						className="btn"
-						disabled={loading}
-						aria-label="submit-btn"
-					>
-						{loading ? 'Loading' : 'Post'}
-					</button>
 				</div>
+				<button
+					className="btn"
+					disabled={loading}
+					aria-label="submit-btn"
+				>
+					{loading ? 'Loading' : 'Post'}
+				</button>
 				<div className="error-msg">{error}</div>
 			</form>
 		</div>

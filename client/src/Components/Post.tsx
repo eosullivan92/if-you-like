@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { createComment } from '../../api/comments'
-import { usePost, PostType } from '../../context/PostContext'
+import { usePost } from '../../context/PostContext'
 import { useAsyncFn } from '../../hooks/useAsync'
 import CommentList from './CommentList'
 import { CommentForm } from './CommentForm'
@@ -10,6 +10,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
 import { PostForm } from './PostForm'
 import { usePostList } from '../../context/PostListContext'
+import { PostType } from '../../types/types'
 
 export const Post = () => {
 	const navigate = useNavigate()

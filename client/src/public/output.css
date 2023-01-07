@@ -63,6 +63,11 @@ button {
   display: none;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .comment-form-row {
   display: flex;
   gap: 1rem;
@@ -134,6 +139,75 @@ button {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+}
+
+.post-title {
+  border: 1px solid hsla(32deg, 100%, 40%, 0.6);
+  border-radius: 5px;
+  box-shadow: hsla(32deg, 100%, 40%, 0.3) 1.95px 1.95px 2.6px;
+  padding: 0.5em 1em;
+  margin-top: 1em;
+}
+.post-title h1 {
+  margin: 0;
+}
+
+.post-form-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid hsla(32deg, 100%, 40%, 0.6);
+  border-radius: 5px;
+  width: 300px;
+  min-height: 450px;
+  background-color: hsl(45deg, 100%, 96%);
+  padding: 1em;
+}
+.post-form-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+.post-form-modal .modal-header h2 {
+  margin: 0;
+  padding-bottom: 0.5em;
+}
+.post-form-modal .modal-header button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.post-form-modal form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1em;
+}
+.post-form-modal form .form-input-control {
+  display: flex;
+  flex-direction: column;
+}
+.post-form-modal form .form-input-control input {
+  padding: 0.5em;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid hsla(32deg, 100%, 40%, 0.6);
+}
+.post-form-modal form .form-input-control textarea {
+  height: 200px;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.5em;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  resize: none;
+  border: 1px solid hsla(32deg, 100%, 40%, 0.6);
+}
+.post-form-modal form button {
+  padding: 0.5em;
 }
 
 /*# sourceMappingURL=output.css.map */
