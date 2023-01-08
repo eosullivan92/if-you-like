@@ -95,8 +95,11 @@ a {
   align-items: center;
 }
 
+.comment .header .name {
+  font-weight: 600;
+}
 .comment .header .date {
-  margin-right: 1em;
+  margin-left: 0.5em;
 }
 .comment .footer {
   display: flex;
@@ -130,6 +133,9 @@ a {
   background-color: hsla(32deg, 100%, 40%, 0.6);
   transition: background-color 100ms ease-in-out;
 }
+.nested-comment-stack .nested-comments {
+  width: 100%;
+}
 
 .comment-stack {
   margin: 0.5rem 0;
@@ -142,9 +148,14 @@ a {
 .navbar {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 1em;
+}
+.navbar h1 {
+  margin: 0;
+  padding: 0;
 }
 
 .post-title {
@@ -156,6 +167,10 @@ a {
 }
 .post-title h1 {
   margin: 0;
+}
+.post-title .footer {
+  display: flex;
+  gap: 0.5em;
 }
 
 .post-form-modal {

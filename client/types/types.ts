@@ -33,6 +33,7 @@ export type PostType = {
 export type PostTitleType = {
 	id: string
 	title: string
+	comments: Comment[]
 	likeCount: number
 	likedByMe: boolean
 }

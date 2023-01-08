@@ -79,6 +79,7 @@ export function PostListProvider({ children }: ChildrenProps) {
 	useEffect(() => {
 		if (postList === null) return
 		setPosts(postList)
+		console.log(postList)
 	}, [postList])
 
 	return (

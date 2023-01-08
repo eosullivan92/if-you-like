@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"devStart": "nodemon server.js"
+		"devStart": "nodemon server.js",
+        "build": "npm run prisma migrate deploy"
 	},
 	"prisma": {
 		"seed": "node prisma/seed.js"

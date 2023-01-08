@@ -56,6 +56,7 @@ app.get('/posts', async (req, res) => {
 				select: {
 					id: true,
 					title: true,
+					comments: true,
 					_count: { select: { likes: true } },
 				},
 			})

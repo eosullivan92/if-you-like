@@ -1,0 +1,24 @@
+{
+	"name": "if-you-like",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "run-p build:client build:server",
+		"build:client": "cd ./client && npm run build",
+		"build:server": "cd ./server && npm run build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eosullivan92/if-you-like.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/eosullivan92/if-you-like/issues"
+	},
+	"homepage": "https://github.com/eosullivan92/if-you-like#readme",
+	"dependencies": {
+		"concurrently": "^7.6.0"
+	}
+}

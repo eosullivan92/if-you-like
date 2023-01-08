@@ -1,4 +1,4 @@
-import { FaRegHeart, FaHeart } from 'react-icons/fa'
+import { FaRegHeart, FaHeart, FaRegCommentAlt } from 'react-icons/fa'
 import { IconBtn } from './IconButton'
 import { usePostList } from '../../context/PostListContext'
 import { PostForm } from './PostForm'
@@ -65,6 +65,12 @@ export const PostList = () => {
 								disabled={togglePostLikeFn.loading}
 							>
 								{post?.likeCount}
+							</IconBtn>
+							<IconBtn
+								Icon={FaRegCommentAlt}
+								aria-label="comment count"
+							>
+								{post?.comments.length} comments
 							</IconBtn>
 						</div>
 					</div>
