@@ -14,7 +14,7 @@ type RequestData = {
 
 const api = axios.create({
 	// baseURL: import.meta.env.VITE_SERVER_URL,
-	baseURL: `0.0.0.0.3000`,
+	baseURL: process.env.SERVER_URL,
 	withCredentials: true,
 })
 

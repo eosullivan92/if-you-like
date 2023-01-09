@@ -47,10 +47,6 @@ const COMMENT_SELECT_FIELDS = {
 	},
 }
 
-app.get('/', async (req, res) => {
-	res.send('hello')
-})
-
 // GET POSTS
 app.get('/posts', async (req, res) => {
 	return await commitToDb(
