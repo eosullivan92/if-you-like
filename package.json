@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
+		"start": "cd ./server node server.js",
 		"dev": "cd ./client && vite",
 		"preview": "cd ./client && vite preview",
 		"devStart": "cd ./server && nodemon server.js",
