@@ -14,14 +14,15 @@ type RequestData = {
 
 const api = axios.create({
 	// baseURL: import.meta.env.VITE_SERVER_URL,
-	baseURL: process.env.VITE_SERVER_URL,
+	baseURL: process.env.SERVER_URL,
 	withCredentials: true,
 })
 
 export function makeRequest(url: string, options?: RequestOptions) {
 	return api(url, options)
 		.then((res) => res.data)
-		.catch((error) =>
+		.catch((error) => {
+			console.log(error.message)
 			Promise.reject(error?.response?.data?.message ?? 'error')
-		)
+		})
 }

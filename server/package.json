@@ -1,0 +1,27 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"devStart": "nodemon server.js",
+		"build": "npx prisma migrate deploy && npx prisma generate"
+	},
+	"prisma": {
+		"seed": "node prisma/seed.js"
+	},
+	"author": "",
+	"type": "module",
+	"license": "ISC",
+	"dependencies": {
+		"@fastify/sensible": "^5.1.1",
+		"@fastify/cookie": "^8.3.0",
+		"@fastify/cors": "^8.2.0",
+		"@prisma/client": "^4.6.1",
+		"dotenv": "^16.0.3",
+		"fastify": "^4.10.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.20",
+		"prisma": "^4.6.1"
+	}
+}

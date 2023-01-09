@@ -10,7 +10,7 @@ dotenv.config()
 const app = fastify()
 app.register(sensible)
 app.register(cors, {
-	origin: process.env.CLIENT_URL,
+	origin: 'https://if-you-like-production.up.railway.app/',
 	credentials: true,
 })
 
@@ -22,8 +22,8 @@ app.addHook('onRequest', (req, res, done) => {
 		req.cookies.userId = CURRENT_USER_ID
 		res.clearCookie('userId')
 		res.setCookie('userId', CURRENT_USER_ID, {
-			domain: 'localhost',
-			path: ':5173',
+			domain: '0.0.0.0',
+			path: process.env.PORT,
 		})
 	}
 	done()
@@ -354,4 +354,13 @@ async function commitToDb(promise) {
 	return data
 }
 
-app.listen({ port: process.env.PORT })
+const PORT = process.env.PORT || 3000
+
+app.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {
+	if (err) {
+		fastify.log.error(err)
+		console.log(err)
+	} else {
+		console.log(`server is listening on ${address}`)
+	}
+})
