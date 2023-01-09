@@ -10,7 +10,7 @@ dotenv.config()
 const app = fastify()
 app.register(sensible)
 app.register(cors, {
-	origin: 'https://if-you-like-production.up.railway.app/',
+	origin: process.env.CLIENT_URL,
 	credentials: true,
 })
 
@@ -356,11 +356,17 @@ async function commitToDb(promise) {
 
 const PORT = process.env.PORT || 3000
 
-app.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {
-	if (err) {
-		fastify.log.error(err)
-		console.log(err)
-	} else {
-		console.log(`server is listening on ${address}`)
+app.listen(
+	{
+		port: PORT,
+		host: '0.0.0.0',
+	},
+	(err, address) => {
+		if (err) {
+			fastify.log.error(err)
+			console.log(err)
+		} else {
+			console.log(`server is listening on ${address}`)
+		}
 	}
-})
+)
